@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climate Awareness</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      background-image: url('https://images-assets.nasa.gov/image/PIA18033/PIA18033~orig.jpg'); /* Path to your satellite image */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Roboto', sans-serif; /* Elegant and modern font */
+      color: #ffffff;
+    }
+
+    .navbar {
+      background: rgba(0, 0, 0, 0.7); /* Semi-transparent background for contrast */
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      color: #ffffff !important;
+      font-size: 1.1rem;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #00ffcc !important; /* Glow effect on hover */
+    }
+
+    .navbar-brand img {
+      border-radius: 50%; /* Make logo circular */
+      border: 2px solid #ffffff;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-title {
+      font-weight: bold;
+      color: #2ecc71; /* Green to match the theme */
+    }
+
+    .card-text {
+      color: #34495e;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      color: #ffffff;
+    }
+
+    footer p {
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* Button animations */
+    .btn-custom {
+      background-color: #00ffcc;
+      color: #000;
+      border-radius: 20px;
+      padding: 10px 20px;
+      transition: all 0.3s ease-in-out;
+      text-transform: uppercase;
+    }
+
+    .btn-custom:hover {
+      background-color: #2ecc71;
+      color: #fff;
+      box-shadow: 0px 8px 15px rgba(46, 204, 113, 0.4);
+    }
+  </style>
+</head>
+<body>
+ 
+  <main class="container my-5">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Learn About Climate</h5>
+            <p class="card-text">Discover ways to combat climate change and make a positive impact.</p>
+            <a href="/learn" class="btn btn-custom">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Track Your Impact</h5>
+            <p class="card-text">Measure your actions and see how you’re helping the environment.</p>
+            <a href="/track" class="btn btn-custom">Get Started</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Join Challenges</h5>
+            <p class="card-text">Participate in global challenges to fight climate change together.</p>
+            <a href="/challenges" class="btn btn-custom">Join Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="/js/scripts.js"></script>
+</body>
+</html>

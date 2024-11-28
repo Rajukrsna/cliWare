@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Weather Map</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Custom Styles for Card Layout */
+        #map {
+            height: 400px; /* Set the height of the map */
+        }
+        .main-card {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        .stats-card {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            padding: 20px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .map-container, .stats-container {
+            margin: 10px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px;
+            color: #2c3e50;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        .stats-container p {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Explore Real-Time Weather and CO₂ Footprint</h1>
+
+        <!-- Main Card for Map and Stats -->
+        <div class="main-card">
+            <div class="row">
+                <!-- Map Card -->
+                <div class="col-md-5">
+                    <h5 class="text-center">Weather Map</h5>
+                    <div id="map"></div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="col-md-6">
+                    <h5 class="text-center">Weather Stats</h5>
+                    <canvas id="statsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+       <!-- Additional Stats Card -->
+<!-- Additional Stats Card -->
+<div class="card shadow-lg mb-4 rounded border-0">
+    <div class="card-body">
+        <h5 class="card-title text-center mb-4 text-primary"><i class="fas fa-chart-line"></i>Stats</h5>
+        
+        <div class="row">
+            <!-- Humidity Section -->
+            <div class="col-md-5 mb-3">
+                <div class="d-flex align-items-center p-3 bg-light rounded shadow-sm">
+                    <div class="mr-3">
+                        <i class="fas fa-tint fa-2x text-info"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted">Humidity</p>
+                        <h6 id="humidity" class="font-weight-bold">0%</h6>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CO₂ Footprint Section -->
+            <div class="col-md-5 mb-3">
+                <div class="d-flex align-items-center p-3 bg-light rounded shadow-sm">
+                    <div class="mr-3">
+                        <i class="fas fa-cloud fa-2x text-success"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted">CO₂ Footprint</p>
+                        <h6 id="co2-footprint" class="font-weight-bold">0 kg</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+            <!-- Temperature Section -->
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center p-3 bg-light rounded shadow-sm">
+                    <div class="mr-3">
+                        <i class="fas fa-temperature-high fa-2x text-warning"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted">Temperature</p>
+                        <h6 id="temperature" class="font-weight-bold">0°C</h6>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wind Speed Section -->
+            <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center p-3 bg-light rounded shadow-sm">
+                    <div class="mr-3">
+                        <i class="fas fa-wind fa-2x text-primary"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted">Wind Speed</p>
+                        <h6 id="wind-speed" class="font-weight-bold">0 m/s</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Link to FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Your OpenWeatherMap API key
+            const apiKey = "072a7d0f1e214fc7a264376c0c65eb14";
+
+            // Initialize the map
+            const map = L.map('map').setView([20, 0], 2); // Default view of the map
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+
+            // Handle map click
+            map.on('click', async function (e) {
+                const { lat, lng } = e.latlng;
+                const weatherData = await getWeatherData(lat, lng);
+
+                if (weatherData) {
+                    const { name, main, weather, wind, clouds, main: { humidity }, main:{temperature} } = weatherData;
+                    const co2Footprint = calculateMockCO2Footprint(weatherData);
+
+                    // Show data in popup
+                    L.popup()
+                        .setLatLng([lat, lng])
+                        .setContent(`
+                            <strong>City:</strong> ${name || 'Unknown'}<br>
+                            <strong>Temperature:</strong> ${main.temp}°C<br>
+                            <strong>Weather:</strong> ${weather[0].description}<br>
+                            <strong>CO₂ Footprint:</strong> ${co2Footprint} kg<br>
+                            <strong>Wind Speed:</strong> ${wind.speed} m/s<br>
+                            <strong>Cloudiness:</strong> ${clouds.all}%<br>
+                            <strong>Humidity:</strong> ${humidity}%
+                        `)
+                        .openOn(map);
+
+                    // Update chart and additional stats
+                    updateChart({ temperature: main.temp, wind: wind.speed, clouds: clouds.all, co2: co2Footprint });
+                    document.getElementById('humidity').textContent = `Humidity: ${humidity}%`;
+                    document.getElementById('co2-footprint').textContent = `CO₂ Footprint: ${co2Footprint} kg`;
+                    document.getElementById('temperature').textContent = `Temperature: ${main.temp} Celcius`;
+                    document.getElementById('wind-speed').textContent = `Wind Speed: ${wind.speed} m/s `;
+                }
+            });
+
+            // Fetch weather data
+            async function getWeatherData(lat, lon) {
+                try {
+                    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+                    if (!response.ok) throw new Error("Weather data not available");
+                    return await response.json();
+                } catch (error) {
+                    console.error("Error fetching weather data:", error);
+                    return null;
+                }
+            }
+
+            // Mock CO2 footprint calculator
+            function calculateMockCO2Footprint(data) {
+                const temp = data.main.temp;
+                return (temp * 0.1 + Math.random() * 5).toFixed(2); // Randomized for demonstration
+            }
+
+            // Initialize chart
+            const ctx = document.getElementById('statsChart').getContext('2d');
+            const statsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Temperature (°C)', 'Wind Speed (m/s)', 'Cloudiness (%)', 'CO₂ Footprint (kg)'],
+                    datasets: [{
+                        label: 'Weather Stats',
+                        data: [0, 0, 0, 0], // Placeholder data
+                        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Update chart with new data
+            function updateChart(data) {
+                statsChart.data.datasets[0].data = [data.temperature, data.wind, data.clouds, data.co2];
+                statsChart.update();
+            }
+        });
+    </script>
+</body>
+</html>

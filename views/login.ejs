@@ -1,0 +1,22 @@
+<body>
+
+<div class="container" style="max-width: 600px; background: white; border-radius: 10px; padding: 20px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+  <h2 class="text-center mb-4" style="color: #3498DB;">Login</h2>
+  <form action="/userAuth/login" method="POST">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary w-100" style="background: linear-gradient(90deg, #3498DB, #85C1E9);">Login</button>
+    </div>
+    <p class="text-center mt-3">
+      Don't have an account? <a href="/register" style="color: #2ECC71;">Register Now</a>
+    </p>
+  </form>
+</div>
+</body>
