@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
             secure: process.env.NODE_ENV === 'production',
         });
 
-        res.redirect('/profile'); // Corrected URL
+        res.redirect('/profile/media'); // Corrected URL
     } catch (err) {
         console.error('Error during login:', err);
         res.status(500).send('Internal Server Error');

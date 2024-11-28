@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,42 +15,14 @@
   <link rel="stylesheet" href="/css/styles.css">
   <style>
     body {
-      background-image: url('https://images-assets.nasa.gov/image/PIA18033/PIA18033~orig.jpg'); /* Path to your satellite image */
+      background-image: url('https://images-assets.nasa.gov/image/PIA18033/PIA18033~orig.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      font-family: 'Roboto', sans-serif; /* Elegant and modern font */
-      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      color: #2ecc71;
     }
 
-    .navbar {
-      background: rgba(0, 0, 0, 0.7); /* Semi-transparent background for contrast */
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
-    }
-
-    .navbar-brand {
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-
-    .navbar-nav .nav-link {
-      color: #ffffff !important;
-      font-size: 1.1rem;
-      transition: color 0.3s ease-in-out;
-    }
-
-    .navbar-nav .nav-link:hover {
-      color: #00ffcc !important; /* Glow effect on hover */
-    }
-
-    .navbar-brand img {
-      border-radius: 50%; /* Make logo circular */
-      border: 2px solid #ffffff;
-    }
-
-    .container {
-      text-align: center;
-    }
 
     .card {
       background: rgba(255, 255, 255, 0.9);
@@ -66,7 +39,7 @@
 
     .card-title {
       font-weight: bold;
-      color: #2ecc71; /* Green to match the theme */
+      color: #2ecc71;
     }
 
     .card-text {
@@ -76,6 +49,8 @@
     footer {
       background: rgba(0, 0, 0, 0.7);
       color: #ffffff;
+      text-align: center;
+      padding: 20px;
     }
 
     footer p {
@@ -83,7 +58,6 @@
       font-weight: 400;
     }
 
-    /* Button animations */
     .btn-custom {
       background-color: #00ffcc;
       color: #000;
@@ -98,15 +72,49 @@
       color: #fff;
       box-shadow: 0px 8px 15px rgba(46, 204, 113, 0.4);
     }
+
+    .icon {
+      font-size: 50px;
+      color: #2ecc71;
+    }
+
+    .carousel-item img {
+      max-height: 500px;
+      object-fit: cover;
+    }
+
+    .fact-card {
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .fact-card .icon {
+      color: #f39c12;
+    }
   </style>
 </head>
+
 <body>
- 
+
+  
+
+  <!-- Hero Section -->
+  <div class="container text-center my-5">
+    <h1 class="display-4 ">Join the Fight Against Climate Change</h1>
+    <p class="lead">Together, we can make a real difference. Explore ways to reduce your carbon footprint and take
+      action.</p>
+    <a href="/userAuth/register" class="btn btn-custom">Get Involved Now</a>
+  </div>
+
+  <!-- Main Content Section -->
   <main class="container my-5">
-    <div class="row">
+    <div class="row text-center">
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
+            <i class="fas fa-book-open icon"></i>
             <h5 class="card-title">Learn About Climate</h5>
             <p class="card-text">Discover ways to combat climate change and make a positive impact.</p>
             <a href="/learn" class="btn btn-custom">Explore</a>
@@ -116,6 +124,7 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
+            <i class="fas fa-chart-line icon"></i>
             <h5 class="card-title">Track Your Impact</h5>
             <p class="card-text">Measure your actions and see how you’re helping the environment.</p>
             <a href="/track" class="btn btn-custom">Get Started</a>
@@ -125,6 +134,7 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
+            <i class="fas fa-trophy icon"></i>
             <h5 class="card-title">Join Challenges</h5>
             <p class="card-text">Participate in global challenges to fight climate change together.</p>
             <a href="/challenges" class="btn btn-custom">Join Now</a>
@@ -133,10 +143,39 @@
       </div>
     </div>
   </main>
+
+  <!-- Did You Know Section -->
+  <section class="container my-5">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="fact-card p-3">
+          <i class="fas fa-thermometer-half icon"></i>
+          <h5>Did You Know?</h5>
+          <p>Earth's average temperature has increased by 1.2°C since the late 19th century.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="fact-card p-3">
+          <i class="fas fa-leaf icon"></i>
+          <h5>Did You Know?</h5>
+          <p>More than 8 million tons of plastic waste end up in our oceans every year.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="fact-card p-3">
+          <i class="fas fa-globe-americas icon"></i>
+          <h5>Did You Know?</h5>
+          <p>Climate change could displace over 200 million people by 2050 due to rising sea levels.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom JS -->
-  <script src="/js/scripts.js"></script>
+
+  <!-- Bootstrap JS & Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
 </body>
+
 </html>
